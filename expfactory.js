@@ -48,9 +48,9 @@ function Expfactory () {
                  dataType: "application/json",
                      
                  // Endpoint not running, local save
-                 error: function(err) {
+                 error: function(onError) {
 
-                     if (err.status == 200){ this.next(); } 
+                     if (onError.status == 200){ this.next(); } 
 
                      // Do local save of the data
                      else { this.localSave(data); }
