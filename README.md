@@ -20,7 +20,7 @@ This small module requires JQuery to be able to use ajax.
 You would want to create an instance of `Expfactory`
 
 ```javascript
-exp = Expfactory();
+exp = new Expfactory();
 ```
 
 ### Add Data
@@ -49,7 +49,7 @@ exp.next();
 Thus, a full example might look like this:
 
 ```javascript
-exp = Expfactory();
+exp = new Expfactory();
 
 data = {"value": 1};
 exp.addData(data);
@@ -64,7 +64,7 @@ the `localSave` function, which is called if the post to the expected Experiment
 endpoint (`/next`) does not work. That might look like this:
 
 ```javascript
-exp = Expfactory();
+exp = new Expfactory();
 exp.localSave = function(data) {
   jsPsych.data.localSave('spatial-span_results.csv', 'csv');
 }
