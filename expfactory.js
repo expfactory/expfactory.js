@@ -26,10 +26,42 @@ function Expfactory () {
         this.data.push(data);
     }
 
+    // Local save function, will just print to console
+    // unless the user writes own function (recommended)
+    this.localSave = function(data) {
+       var data = data || self.data;
+       console.log(data);
+       console.log(err);
+    };
+
     // Submit Data /save
     this.saveData = function() {
         console.log("Saving data...");    
 
+        // Serialize the data
+        var promise = new Promise(function(resolve, reject) {
+            var data = JSON.stringify(this.data);
+            resolve(data);
+        })
+
+        promise.then(function(data) {
+            $.ajax({ type: "POST",
+                     url: '/save',
+                     data: { "data": data },
+                     success: function(){ this.nextEndpoint(); },
+                     dataType: "application/json",
+                     
+                     // Endpoint not running, local save
+                     error: function(err) {
+
+                         if (err.status == 200){ document.location = "/next"; } 
+
+                         // Do local save of the data
+                         else { this.localSave(data); }
+
+                     });
+                 })
+             }
     }
 
     // Get data for inspection
@@ -40,6 +72,7 @@ function Expfactory () {
     // Akin to hitting /next
     this.nextEndpoint = function() {
         console.log("Next experiment!");
+        document.location = "/next";
     }
 
 };
