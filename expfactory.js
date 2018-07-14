@@ -45,16 +45,17 @@ function Expfactory () {
         })
 
         promise.then(function(data) {
+
             $.ajax({ type: "POST",
                      url: '/save',
                      data: { "data": data },
-                     success: function(){ this.nextEndpoint(); },
+                     success: function(){ this.next(); },
                      dataType: "application/json",
                      
                      // Endpoint not running, local save
                      error: function(err) {
 
-                         if (err.status == 200){ document.location = "/next"; } 
+                         if (err.status == 200){ this.next(); } 
 
                          // Do local save of the data
                          else { this.localSave(data); }
@@ -70,7 +71,7 @@ function Expfactory () {
     }
 
     // Akin to hitting /next
-    this.nextEndpoint = function() {
+    this.next = function() {
         console.log("Next experiment!");
         document.location = "/next";
     }
