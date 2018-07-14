@@ -39,31 +39,25 @@ function Expfactory () {
         console.log("Saving data...");    
 
         // Serialize the data
-        var promise = new Promise(function(resolve, reject) {
-            var data = JSON.stringify(this.data);
-            resolve(data);
-        })
+        var data = JSON.stringify(this.data);
 
-        promise.then(function(data) {
-
-            $.ajax({ type: "POST",
-                     url: '/save',
-                     data: { "data": data },
-                     success: function(){ this.next(); },
-                     dataType: "application/json",
+        $.ajax({ type: "POST",
+                 url: '/save',
+                 data: { "data": data },
+                 success: function(){ this.next(); },
+                 dataType: "application/json",
                      
-                     // Endpoint not running, local save
-                     error: function(err) {
+                 // Endpoint not running, local save
+                 error: function(err) {
 
-                         if (err.status == 200){ this.next(); } 
+                     if (err.status == 200){ this.next(); } 
 
-                         // Do local save of the data
-                         else { this.localSave(data); }
+                     // Do local save of the data
+                     else { this.localSave(data); }
 
-                     });
-                 })
-             }
-    }
+                 });
+             })
+     }
 
     // Get data for inspection
     this.getData() = function() {
